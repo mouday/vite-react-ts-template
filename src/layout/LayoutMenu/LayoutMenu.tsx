@@ -1,43 +1,39 @@
 import React, { useState, useEffect } from "react";
-import { MENU_ITEMS } from "./config";
+import { MENU_ITEMS, getCurrentPath } from "./config";
 import { Breadcrumb, Layout, Menu, theme } from "antd";
 import { useNavigate, useLocation, useMatches } from "react-router-dom";
 
 export default function LayoutMenu() {
   const navigateTo = useNavigate();
   const currentRoute = useLocation();
-
-  const [openKeys, setOpenKeys] = useState([""]);
-
-  console.log(currentRoute.pathname);
+  
+  const [openKeys, setOpenKeys] = useState([]);
 
   const handleMenuClick = (e) => {
-    // console.log(e.key);
     // 编程式路由导航
     navigateTo(e.key);
   };
 
+  const handleOpenChange = (keys) => {
+    setOpenKeys(keys.slice(-1));
+  };
+
   useEffect(() => {
-    for (let item of MENU_ITEMS) {
-      if (item.children) {
-        let currentChild = item.children.find((child) => {
-          return child.key == currentRoute.pathname;
-        });
+    const routePath = getCurrentPath(currentRoute.pathname);
 
-        if (currentChild) {
-          setOpenKeys([item.key]);
-        }
-      }
-    }
-  });
+    setOpenKeys(routePath.slice(-1).map((item) => item.key));
+  }, []);
 
+  // defaultOpenKeys 初始展开的 SubMenu 菜单项 key 数组
+  // defaultSelectedKeys 初始选中的菜单项 key 数组
   return (
     <Menu
       theme="dark"
       defaultSelectedKeys={[currentRoute.pathname]}
       mode="inline"
-      defaultOpenKeys={openKeys}
       items={MENU_ITEMS}
+      openKeys={openKeys}
+      onOpenChange={handleOpenChange}
       onClick={handleMenuClick}
     />
   );

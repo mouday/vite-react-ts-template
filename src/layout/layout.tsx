@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   DesktopOutlined,
   FileOutlined,
@@ -10,17 +10,41 @@ import {
 import type { MenuProps } from "antd";
 import { Breadcrumb, Layout, Menu, theme } from "antd";
 import "./layout.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Link, useRoutes, Outlet } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 
 import LayoutMenu from "./LayoutMenu/LayoutMenu";
+import { getCurrentPath } from "./LayoutMenu/config";
+import { Avatar, Button } from "antd";
 
 const { Header, Content, Footer, Sider } = Layout;
 
 const AppLayout: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false);
   const { token } = theme.useToken();
- 
+  const currentRoute = useLocation();
+
+  const [items, setItems] = useState([]);
+
+  const { username } = useSelector((state: any) => {
+    return {
+      username: state.username,
+    };
+  });
+
+  useEffect(() => {
+    const routePath = getCurrentPath(currentRoute.pathname);
+
+    setItems(
+      routePath.map((item) => {
+        return {
+          title: <a href={item.key}>{item.label}</a>,
+        };
+      })
+    );
+  }, [currentRoute]);
+
   return (
     <Layout className="layout__wrap">
       {/* 左边导航栏 */}
@@ -44,10 +68,12 @@ const AppLayout: React.FC = () => {
         {/* 头部 */}
         <Header className="layout__header">
           {/* 面包屑 */}
-          <Breadcrumb style={{ lineHeight: "64px" }}>
-            <Breadcrumb.Item>User</Breadcrumb.Item>
-            <Breadcrumb.Item>Bill</Breadcrumb.Item>
-          </Breadcrumb>
+          <Breadcrumb items={items} style={{ lineHeight: "64px" }} />
+
+          <div className="layout__user">
+            <Avatar size={32} icon={<UserOutlined />} />
+            <span className="layout__username">{username}</span>
+          </div>
         </Header>
 
         {/* 内容 */}

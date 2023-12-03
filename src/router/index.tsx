@@ -2,6 +2,7 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
 import AppLayout from "../layout/layout";
+import Login from "../views/Login/Login";
 
 // import Home from "../views/Home/Home";
 // import About from "../views/About/About";
@@ -52,6 +53,11 @@ export const routes = [
         element: withLoadingComponent(<User />),
       },
     ],
+  },
+
+  {
+    path: "/login",
+    element: <Login />,
   },
   {
     path: "*",

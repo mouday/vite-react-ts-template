@@ -44,3 +44,23 @@ export const MENU_ITEMS = [
     ],
   },
 ];
+
+export function getCurrentPath(pathname) {
+  let routePath = [];
+
+  for (let item of MENU_ITEMS) {
+    if (item.key == pathname) {
+      routePath.push(item);
+    } else if (item.children) {
+      let currentChild = item.children.find((child) => {
+        return child.key == pathname;
+      });
+
+      if (currentChild) {
+        routePath.push(item);
+        routePath.push(currentChild);
+      }
+    }
+  }
+  return routePath;
+}

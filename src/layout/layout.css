@@ -19,6 +19,16 @@
 .layout__header {
   padding: 0 16px;
   background-color: #fff;
+  display: flex;
+  align-items: center;
+}
+
+.layout__user {
+  margin-left: auto;
+}
+
+.layout__username {
+  margin-left: 4px;
 }
 .layout__content {
   margin: 16px 16px 0;
