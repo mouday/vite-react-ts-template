@@ -11,59 +11,16 @@ import type { MenuProps } from "antd";
 import { Breadcrumb, Layout, Menu, theme } from "antd";
 import "./layout.css";
 import { useNavigate } from "react-router-dom";
+import { Link, useRoutes, Outlet } from "react-router-dom";
+
+import LayoutMenu from "./LayoutMenu/LayoutMenu";
 
 const { Header, Content, Footer, Sider } = Layout;
 
-const items = [
-  {
-    label: "Home",
-    key: "/home",
-    icon: <PieChartOutlined />,
-  },
-  {
-    label: "About",
-    key: "/about",
-    icon: <DesktopOutlined />,
-    children: [
-      {
-        label: "Table",
-        key: "/table",
-      },
-      {
-        label: "Form",
-        key: "/form",
-      },
-    ],
-  },
-
-  // getItem("Option 1", "1", <PieChartOutlined />),
-  // getItem("Option 2", "2", <DesktopOutlined />),
-  // getItem("User", "sub1", <UserOutlined />, [
-  //   getItem("Tom", "3"),
-  //   getItem("Bill", "4"),
-  //   getItem("Alex", "5"),
-  // ]),
-  // getItem("Team", "sub2", <TeamOutlined />, [
-  //   getItem("Team 1", "6"),
-  //   getItem("Team 2", "8"),
-  // ]),
-  // getItem("Files", "9", <FileOutlined />),
-];
-
-const AppLayout: React.FC = ({ children }) => {
+const AppLayout: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false);
-  const {
-    token: { colorBgContainer },
-  } = theme.useToken();
-
-  const navigateTo = useNavigate();
-
-  const handleMenuClick = (e) => {
-    // console.log(e.key);
-    // 编程式路由导航
-    navigateTo(e.key);
-  };
-
+  const { token } = theme.useToken();
+ 
   return (
     <Layout className="layout__wrap">
       {/* 左边导航栏 */}
@@ -79,14 +36,7 @@ const AppLayout: React.FC = ({ children }) => {
         ) : (
           <div className="layout__logo">React管理后台</div>
         )}
-
-        <Menu
-          theme="dark"
-          defaultSelectedKeys={["1"]}
-          mode="inline"
-          items={items}
-          onClick={handleMenuClick}
-        />
+        <LayoutMenu></LayoutMenu>
       </Sider>
 
       {/* 右边内容 */}
@@ -101,7 +51,9 @@ const AppLayout: React.FC = ({ children }) => {
         </Header>
 
         {/* 内容 */}
-        <Content className="layout__content">{children}</Content>
+        <Content className="layout__content">
+          <Outlet></Outlet>
+        </Content>
 
         {/* 底部 */}
         <Footer className="layout__footer">

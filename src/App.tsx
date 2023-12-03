@@ -5,7 +5,7 @@ import AppLayout from "./layout/layout";
 function App() {
   const route = useRoutes(routes);
   
-  return <AppLayout>{route}</AppLayout>;
+  return <>{route}</>;
 }
 
 export default App;
