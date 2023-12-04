@@ -8,7 +8,7 @@ export function setUser(data: any) {
   return { type: SET_USER, data };
 }
 
-export function reducer(state = defaultState, action: any) {
+export function userReducer(state = defaultState, action: any) {
   const { type, data } = action;
 
   switch (type) {

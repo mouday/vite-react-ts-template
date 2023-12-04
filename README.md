@@ -1,5 +1,13 @@
 # React + TypeScript + Vite
 
+项目方案
+- react 框架
+- reset-css 样式重置
+- antd UI库
+- axios 网络请求
+- redux 状态管理
+- react-router-dom 路由
+
 使用css方案BEM
 
 参考代码：https://gitee.com/zqingle/lege-react-management
@@ -17,3 +25,7 @@
 浏览器开发工具：
 
 Redux DevTools
+
+VSCode 插件：
+
+JSON to TS

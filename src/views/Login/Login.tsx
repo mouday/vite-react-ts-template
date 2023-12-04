@@ -3,7 +3,8 @@ import { Button, Checkbox, Form, Input } from "antd";
 import { useNavigate, useLocation, useMatches } from "react-router-dom";
 import "./Login.less";
 import { useSelector, useDispatch } from "react-redux";
-import { setUser } from "../../store/reducer";
+import { setUser } from "../../store/reducers/user-reducer";
+
 
 export default function Login() {
   const navigateTo = useNavigate();
@@ -15,7 +16,7 @@ export default function Login() {
     dispatch(setUser({ username: values.username }));
     navigateTo("/");
   };
-
+  // api
   return (
     <div className="login-wrap">
       <div className="login">
