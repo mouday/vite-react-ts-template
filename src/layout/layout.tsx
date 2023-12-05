@@ -8,7 +8,7 @@ import {
   AppstoreOutlined,
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
-import { Breadcrumb, Layout, Menu, theme } from "antd";
+import { Breadcrumb, Layout, Menu, theme, Dropdown } from "antd";
 import "./layout.css";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Link, useRoutes, Outlet } from "react-router-dom";
@@ -27,9 +27,20 @@ const AppLayout: React.FC = () => {
 
   const [items, setItems] = useState([]);
 
+  const dropdownItems = [
+    {
+      key: "logout",
+      label: (
+        <a target="_self" href="/login">
+          退出
+        </a>
+      ),
+    },
+  ];
+
   const { username } = useSelector((state: any) => {
     return {
-      username: state.username,
+      username: state.user.username,
     };
   });
 
@@ -64,16 +75,22 @@ const AppLayout: React.FC = () => {
       </Sider>
 
       {/* 右边内容 */}
-      <Layout>
+      <Layout className="layout__main">
         {/* 头部 */}
         <Header className="layout__header">
           {/* 面包屑 */}
           <Breadcrumb items={items} style={{ lineHeight: "64px" }} />
 
-          <div className="layout__user">
-            <Avatar size={32} icon={<UserOutlined />} />
-            <span className="layout__username">{username}</span>
-          </div>
+          <Dropdown
+            menu={{ items: dropdownItems }}
+            placement="bottomRight"
+            arrow
+          >
+            <div className="layout__user">
+              <Avatar size={32} icon={<UserOutlined />} />
+              <span className="layout__username">{username}</span>
+            </div>
+          </Dropdown>
         </Header>
 
         {/* 内容 */}
@@ -81,8 +98,7 @@ const AppLayout: React.FC = () => {
           <Outlet></Outlet>
         </Content>
 
-        {/* 底部 */}
-        <Footer className="layout__footer">
+        <Footer style={{ textAlign: "center" }}>
           Ant Design ©2023 Created by Ant UED
         </Footer>
       </Layout>

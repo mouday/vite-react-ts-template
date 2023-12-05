@@ -3,9 +3,9 @@ import api from "@/request/api";
 
 export default function Log() {
   const [headers, setHeaders] = useState({});
-  
+
   const getData = async () => {
-    const res = await api.get();
+    const res = await api.get({});
     console.log(res);
     setHeaders(res.headers);
   };

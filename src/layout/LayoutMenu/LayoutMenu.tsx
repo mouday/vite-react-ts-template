@@ -21,7 +21,7 @@ export default function LayoutMenu() {
   useEffect(() => {
     const routePath = getCurrentPath(currentRoute.pathname);
 
-    setOpenKeys(routePath.slice(-1).map((item) => item.key));
+    setOpenKeys(routePath.slice(0, 1).map((item) => item.key));
   }, []);
 
   // defaultOpenKeys 初始展开的 SubMenu 菜单项 key 数组

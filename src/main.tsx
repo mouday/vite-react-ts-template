@@ -3,6 +3,8 @@ import ReactDOM from "react-dom/client";
 import "reset-css";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
+import "./styles/global.less";
+
 // 引入路由对象
 import App from "./App";
 import store from "./store/index";
