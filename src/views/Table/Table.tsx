@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Space, Table, Tag } from "antd";
 import type { ColumnsType } from "antd/es/table";
+
+import api from "@/request/api";
 
 interface DataType {
   key: string;
@@ -59,36 +61,27 @@ const columns: ColumnsType<DataType> = [
   },
 ];
 
-const data: DataType[] = [
-  {
-    key: "1",
-    name: "John Brown",
-    age: 32,
-    address: "New York No. 1 Lake Park",
-    tags: ["nice", "developer"],
-  },
-  {
-    key: "2",
-    name: "Jim Green",
-    age: 42,
-    address: "London No. 1 Lake Park",
-    tags: ["loser"],
-  },
-  {
-    key: "3",
-    name: "Joe Black",
-    age: 32,
-    address: "Sydney No. 1 Lake Park",
-    tags: ["cool", "teacher"],
-  },
-];
+const App: React.FC = () => {
+  const [list, setList] = useState([]);
 
-const App: React.FC = () => (
-  <Table
-    columns={columns}
-    dataSource={data}
-    pagination={{ position: ["bottomCenter"] }}
-  />
-);
+  const getData = async () => {
+    const res = await api.getList({});
+    if (res.ok) {
+      setList(res.data.list);
+    }
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+  return (
+    <Table
+      columns={columns}
+      dataSource={list}
+      pagination={{ position: ["bottomCenter"] }}
+    />
+  );
+};
 
 export default App;

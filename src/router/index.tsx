@@ -1,4 +1,6 @@
-// 路由写法二
+/**
+ * 路由
+ */
 import React from "react";
 import { Navigate } from "react-router-dom";
 import AppLayout from "../layout/layout";
@@ -18,7 +20,7 @@ const withLoadingComponent = (component) => (
   <React.Suspense fallback={<div>Loading...</div>}>{component}</React.Suspense>
 );
 
-export const routes = [
+export const routes: Route[] = [
   {
     path: "/",
     // 重定向
@@ -27,10 +29,12 @@ export const routes = [
   {
     path: "/",
     element: <AppLayout></AppLayout>,
+
     children: [
       {
         path: "/home",
         element: withLoadingComponent(<Home />),
+        auth: true,
       },
       {
         path: "/about",

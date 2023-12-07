@@ -14,8 +14,8 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { Link, useRoutes, Outlet } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
-import LayoutMenu from "./LayoutMenu/LayoutMenu";
-import { getCurrentPath } from "./LayoutMenu/config";
+import LayoutMenu from "./LayoutMenu";
+import { getCurrentPath } from "./config";
 import { Avatar, Button } from "antd";
 
 const { Header, Content, Footer, Sider } = Layout;

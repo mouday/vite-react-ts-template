@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const instance = axios.create({
-  baseURL: "https://httpbin.org",
+  baseURL: "/api",
   timeout: 1000 * 10, // 毫秒
 });
 
@@ -18,6 +18,14 @@ instance.interceptors.request.use(
 // 添加响应拦截器
 instance.interceptors.response.use(
   (res) => {
+    
+    // 增加ok参数
+    if (res.data.code == 0) {
+      res.data.ok = true;
+    } else {
+      res.data.ok = false;
+    }
+
     return res.data;
   },
   (err) => {
